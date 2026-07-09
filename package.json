@@ -1,0 +1,25 @@
+{
+  "name": "@codeonlyjs/stdapp",
+  "version": "0.1.1",
+  "description": "A standard application framework for CodeOnlyJS",
+  "main": "./index.js",
+  "module": "./index.js",
+  "type": "module",
+  "author": "Topten Software",
+  "contributors": [
+    {
+      "name": "Brad Robinson",
+      "email": "contact@toptensoftware.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeonlyjs/stdapp.git"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@codeonlyjs/core": "github:codeonlyjs/core",
+    "@codeonlyjs/stylish": "github:codeonlyjs/stylish",
+    "commonmark": "github:toptensoftware/commonmark.js#directives"
+  }
+}
