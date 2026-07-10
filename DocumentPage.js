@@ -2,6 +2,7 @@ import { Component, css, html } from "@codeonlyjs/core";
 import { idForText } from "./utils.js";
 import { SecondaryNavigation } from "./SecondaryNavigation.js";
 
+
 /** Implements a document view with automatic secondary navigation
  *  for headings and automatic insertion of heading hash links
  */

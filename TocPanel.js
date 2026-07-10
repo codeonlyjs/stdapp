@@ -4,7 +4,8 @@ import { TocItem } from "./TocItem.js";
 function buildUrlMap(toc)
 {
     let map = new Map();
-    updateMap(toc);
+    if (toc)
+        updateMap(toc);
     return map;
 
     function updateMap(item)
@@ -44,15 +45,30 @@ export class TocPanel extends Component
     #urlMap;
     #selectedItem = null;
 
+    get toc()
+    {
+        return this.#toc;
+    }
+
+    set toc(value)
+    {
+        this.#toc = value;
+        this.#urlMap = buildUrlMap(this.#toc);
+        this.invalidate();
+        nextFrame(() => this.selectUrl(router.current?.url));
+    }
+
     get items()
     {
+        if (!this.#toc)
+            return [];
         return this.#toc.children;
     }
 
     selectUrl(url)
     {   
         // Get the TOC item for the url
-        let item = this.#urlMap.get(url.pathname);
+        let item = this.#urlMap.get(url?.pathname);
 
         // Redundant?
         if (this.#selectedItem == item)
