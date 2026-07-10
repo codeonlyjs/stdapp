@@ -49,6 +49,7 @@ export class AppMain extends Component
             {
                 type: Header,
                 title: () => app.name,
+                logoUrl: () => app.logoUrl,
             },
             {
                 type: "embed-slot",

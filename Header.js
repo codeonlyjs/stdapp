@@ -16,6 +16,17 @@ export class Header extends Component
         this.invalidate();
     }
 
+    #logoUrl;
+    get logoUrl()
+    {
+        return this.#logoUrl;
+    }
+    set logoUrl(value)
+    {
+        this.#logoUrl = value;
+        this.invalidate();
+    }
+
     static template = {
         type: "header #header",
         $: {
@@ -26,8 +37,9 @@ export class Header extends Component
                     href: "/",
                     $: [
                         { 
+                            if: c => c.logoUrl,
                             type: "img", 
-                            src: "/public/logo.svg",
+                            src: c => c.logoUrl,
                         },
                         c => c.title,
                     ]
