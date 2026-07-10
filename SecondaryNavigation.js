@@ -8,7 +8,7 @@ export class SecondaryNavigation extends Component
     {
         super();
 
-        this.#toc = toc.filter(x => x.depth <= 3);
+        this.toc = toc;
 
         this.listen(coenv.document, "scroll", () => {
             this.positionHighlight();
@@ -24,8 +24,20 @@ export class SecondaryNavigation extends Component
     {
         return this.#toc;
     }
+    set toc(value)
+    {
+        if (!value)
+            value = [];
 
-    
+        this.#toc = value.filter(x => x.depth <= 3);
+        this.update();
+    }
+
+    domValid()
+    {
+        this.positionHighlight();
+    }
+
     hidePopupNav()
     {
         this.dispatchEvent(new Event("hidePopupNav"));
@@ -54,13 +66,17 @@ export class SecondaryNavigation extends Component
         if (this.#headingCoords == null)
         {
             this.#headingCoords = this.#toc.map(x => {
-                let el = doc.getElementById(x.id);
-                if (el)
+                if (x.url.startsWith("#"))
                 {
-                    let bounds = el.getBoundingClientRect();
-                    return {
-                        id: x.id,
-                        top: bounds.top + scrollPos,
+                    let id = x.url.substring(1);
+                    let el = doc.getElementById(id);
+                    if (el)
+                    {
+                        let bounds = el.getBoundingClientRect();
+                        return {
+                            id: id,
+                            top: bounds.top + scrollPos,
+                        }
                     }
                 }
             }).filter(x => !!x);
@@ -68,7 +84,7 @@ export class SecondaryNavigation extends Component
 
         // Find the first heading that's visible
         let highlightId = "";
-        if (scrollPos > 20)
+        if (scrollPos >= 0)
         {
             let vh = window.innerHeight || 0;
             scrollPos += 150;
@@ -91,8 +107,8 @@ export class SecondaryNavigation extends Component
         {
             let rThis = this.domTree.rootNode.getBoundingClientRect();
             let r = link.getBoundingClientRect();
-            this.highlight.style.top = r.top - rThis.top - 2;
-            this.highlight.style.height = r.height + 4;
+            this.highlight.style.top = r.top - rThis.top - 1;
+            this.highlight.style.height = r.height + 2;
             link.scrollIntoViewIfNeeded?.(false);
             this.highlight.style.display = "";
         }
@@ -116,6 +132,10 @@ export class SecondaryNavigation extends Component
             {
                 type: "div .highlight",
                 bind: "highlight",
+            },
+            {
+                type: "h2 .title .muted",
+                text: "On This Page",
             },
             {
                 type: "div .toc",
@@ -148,7 +168,6 @@ css`
         height: 31px;
         border-radius:1px;
         transition: top 0.5s cubic-bezier(0,1,.5,1) , height 0.5s cubic-bezier(0,1,.5,1);
-        display: none;
     }
 
     a.link
@@ -156,10 +175,20 @@ css`
         display: block;
     }
     
-    .toc0 { margin-top: 8px; }
-    .toc1 { margin-left: 10px; font-size: 0.8rem}
-    .toc2 { margin-left: 20px; font-size: 0.8rem}
-    .toc3 { margin-left: 30px; font-size: 0.8rem}
+    h2.title
+    {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .toc0 { margin-top: 0px; font-size: 0.9rem }
+    .toc1 { margin-left: 8px; font-size: 0.8rem }
+    .toc2 { margin-left: 16px; font-size: 0.8rem }
+    .toc3 { margin-left: 24px; font-size: 0.8rem }
+    .toc4 { margin-left: 32px; font-size: 0.8rem }
+    .toc5 { margin-left: 40px; font-size: 0.8rem }
 }
 
 `;

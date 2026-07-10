@@ -1,11 +1,11 @@
 export function getScrollParent(element, includeHidden) 
 {
-    var style = getComputedStyle(element);
-    var excludeStaticParent = style.position === "absolute";
-    var overflowRegex = includeHidden ? /(auto|scroll|hidden)/ : /(auto|scroll)/;
+    let style = getComputedStyle(element);
+    let excludeStaticParent = style.position === "absolute";
+    let overflowRegex = includeHidden ? /(auto|scroll|hidden)/ : /(auto|scroll)/;
 
     if (style.position === "fixed") return document.body;
-    for (var parent = element; (parent = parent.parentElement);) {
+    for (let parent = element; (parent = parent.parentElement);) {
         style = getComputedStyle(parent);
         if (excludeStaticParent && style.position === "static") {
             continue;
@@ -71,3 +71,25 @@ export function formatBytes(bytes) {
     return n.toFixed(n < 10 ? 1 : 0) + units[i];
 }
 
+export function idForText(test)
+{
+    let outStr = "";
+    test = test.toLowerCase();
+    for (let i=0; i<test.length; i++)
+    {
+        let ch = test[i];
+        if ((ch>='A' && ch <='Z') 
+                || (ch>='a' && ch<='z') 
+                || (ch>='0' && ch<='9') 
+                || (ch == '-') 
+                || ch == '_' 
+                || ch == ':' 
+                || ch == '.')
+        {
+            outStr += ch;
+        }
+        else if (ch==' ')
+            outStr += '-'
+    }
+    return outStr;
+}

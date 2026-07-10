@@ -117,6 +117,7 @@ css`
     --max-site-width: ${maxContentWidth + sidePanelWidth * 2}px;
     --main-indent: calc((100% - (var(--max-content-width) + var(--side-panel-width) * 2)) / 2);
     --fixed-header-height: var(--header-height);
+    --scroll-margin-top: var(--header-height);
     --align-content: -1.3rem;
 }
 
@@ -228,6 +229,7 @@ css`
     :root
     {
         --fixed-header-height: 0;
+        --scroll-margin-top: var(--header-height);
         --align-content: 0;
     }
     main
