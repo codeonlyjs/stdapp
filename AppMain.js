@@ -1,5 +1,6 @@
 import { Component, css, router, notify } from "@codeonlyjs/core";
-import { Meta, Header } from "@codeonlyjs/stdapp";
+import { Meta } from "./Meta.js";
+import { Header } from "./Header.js";
 import { app } from "./Application.js";
 
 import "./ErrorPage.js"
