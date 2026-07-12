@@ -5,7 +5,10 @@ function buildUrlMap(toc)
 {
     let map = new Map();
     if (toc)
-        updateMap(toc);
+    {
+        for (let t of toc)
+            updateMap(t);
+    }
     return map;
 
     function updateMap(item)
@@ -60,9 +63,7 @@ export class TocPanel extends Component
 
     get items()
     {
-        if (!this.#toc)
-            return [];
-        return this.#toc.children;
+        return this.#toc ?? [];
     }
 
     selectUrl(url)
@@ -88,24 +89,12 @@ export class TocPanel extends Component
     }
 
     static template = {
-        type: "div .toc-panel",
+        type: "div .toc-panel .toc-tree",
         $: [
             {
                 foreach: c => c.items,
-                $: [
-                    {
-                        type: "h2",
-                        text: i => i.title,
-                    },
-                    {
-                        type: "ul .toc-tree",
-                        $: {
-                            foreach: i => i.children,
-                            type: TocItem,
-                            item: i => i,
-                        }
-                    }
-                ]
+                type: TocItem,
+                item: i => i,
             }
         ]
     }

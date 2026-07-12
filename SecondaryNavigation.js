@@ -136,6 +136,7 @@ export class SecondaryNavigation extends Component
             {
                 type: "h2 .title .muted",
                 text: "On This Page",
+                if: c => c.toc.length > 0,
             },
             {
                 type: "div .toc",

@@ -141,6 +141,7 @@ css`
 
     ul
     {
+        margin: 0;
         padding-left: 20px;
         display: none;
     }
