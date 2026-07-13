@@ -20,6 +20,8 @@ export function getScrollParent(element, includeHidden)
 
 export function ensureVisible(elItem, elContainer, options)
 {
+    if (!coenv.browser)
+        return;
     if (!elItem)
         return;
     if (!options)

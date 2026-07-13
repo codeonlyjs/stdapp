@@ -135,11 +135,11 @@ export class DocumentPage extends Component
             // Make sure it has an ID
             if (h.id.length == 0)
             {
-                h.id = idForText(h.innerText);
+                h.id = idForText(h.textContent);
             }
 
             // Adjust level
-            let level = parseInt(h.tagName.substring(1));
+            let level = parseInt(h.nodeName.substring(1));
 
             // Add to TOC
             if (level >= this.#minTocLevel && level <= this.#maxTocLevel)
@@ -154,7 +154,7 @@ export class DocumentPage extends Component
             // Create hash links
             if (level >= this.#minHashLinkLevel && level <= this.#maxHashLinkLevel)
             {
-                let elHashLink = document.createElement("a");
+                let elHashLink = coenv.document.createElement("a");
                 elHashLink.className = 'hashlink';
                 elHashLink.href = `#${h.id}`;
                 elHashLink.textContent = '#';
