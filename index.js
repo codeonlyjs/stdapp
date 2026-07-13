@@ -10,4 +10,5 @@ export * from "./SecondaryNavigation.js";
 export * from "./TocPanel.js";
 export * from "./Icons.js";
 export * from "./utils.js";
+export * from "./DocumentPage.js";
 export * from "./MarkdownPage.js";
