@@ -13,33 +13,37 @@ export class AppMain extends Component
         super();
         
         this.listen(notify, app);
+        this.listen(router, "didEnter", (from, to) => this.loadContent(to));
+    }
 
-        this.listen(router, "didEnter", (from, to) => {
+    onMount()
+    {
+        this.loadContent(router.current);
+    }
 
-            this.create();
-            
-            // Load navigated page into router slot
-            if (to.page)
+    loadContent(to)
+    {
+        // Load navigated page into router slot
+        if (to?.page)
+        {
+            if (!to.page.layout)
             {
-                if (!to.page.layout)
-                {
-                    this.layoutSlot.content = to.page;
-                    this.#currentLayout = null;
-                }
-                else
-                {
-                    // Different layout?
-                    if (to.page.layout != this.#currentLayout?.constructor)
-                    {
-                        // Create new layout component
-                        this.#currentLayout = new to.page.layout();
-                        this.layoutSlot.content = this.#currentLayout;
-                    }
-
-                    this.#currentLayout.loadRoute(to);
-                }
+                this.layoutSlot.content = to.page;
+                this.#currentLayout = null;
             }
-        });
+            else
+            {
+                // Different layout?
+                if (to.page.layout != this.#currentLayout?.constructor)
+                {
+                    // Create new layout component
+                    this.#currentLayout = new to.page.layout();
+                    this.layoutSlot.content = this.#currentLayout;
+                }
+
+                this.#currentLayout.loadRoute(to);
+            }
+        }
     }
 
     #currentLayout = null;

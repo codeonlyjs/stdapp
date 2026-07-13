@@ -155,8 +155,8 @@ export class DocumentPage extends Component
             if (level >= this.#minHashLinkLevel && level <= this.#maxHashLinkLevel)
             {
                 let elHashLink = coenv.document.createElement("a");
-                elHashLink.className = 'hashlink';
-                elHashLink.href = `#${h.id}`;
+                elHashLink.setAttribute("class", 'hashlink');
+                elHashLink.setAttribute("href", `#${h.id}`);
                 elHashLink.textContent = '#';
                 h.insertBefore(elHashLink, h.firstChild);   
             }
