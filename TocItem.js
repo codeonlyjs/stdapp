@@ -65,6 +65,11 @@ export class TocItem extends Component
         this.invalidate();
     }
 
+    get url()
+    {
+        return this.item.url ? router.externalize(this.item.url) : "#";
+    }
+
     toggleExpanded(ev)
     {
         if (!this.#item.children || !this.#item.children.length)
@@ -88,7 +93,7 @@ export class TocItem extends Component
         $: [
             {
                 type: "a",
-                href: c => c.item.url ? router.externalize(c.item.url) : "#",
+                href: c => c.url,
                 on_click: "onClick",
                 $: [
                     {

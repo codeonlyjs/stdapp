@@ -1,4 +1,4 @@
-import { Component, css, html } from "@codeonlyjs/core";
+import { Component, css, router } from "@codeonlyjs/core";
 import { stylish } from "@codeonlyjs/stylish";
 
 // The main header
@@ -39,7 +39,7 @@ export class Header extends Component
                         { 
                             if: c => c.logoUrl,
                             type: "img", 
-                            src: c => c.logoUrl,
+                            src: c => router.externalize(c.logoUrl),
                         },
                         c => c.title,
                     ]
