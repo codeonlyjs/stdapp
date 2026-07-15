@@ -6,10 +6,11 @@ class Application
     {
     }
 
-    get name() { return this.#settings.name };
-    get description() { return this.#settings.description };
-    get image() { return this.#settings.image };
-    get logoUrl() { return this.#settings.logoUrl };
+    get name() { return this.#settings.name; };
+    get description() { return this.#settings.description; };
+    get image() { return this.#settings.image; };
+    get logoUrl() { return this.#settings.logoUrl; };
+    get homeUrl() { return this.#settings.homeUrl; };
 
 
     #settings;

@@ -55,6 +55,7 @@ export class AppMain extends Component
                 type: Header,
                 title: () => app.name,
                 logoUrl: () => app.logoUrl,
+                homeUrl: () => app.homeUrl,
             },
             {
                 type: "embed-slot",

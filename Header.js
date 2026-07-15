@@ -27,6 +27,17 @@ export class Header extends Component
         this.invalidate();
     }
 
+    #homeUrl
+    get homeUrl()
+    {
+        return this.#homeUrl;
+    }
+    set homeUrl(value)
+    {
+        this.#homeUrl = value;
+        this.invalidate();
+    }
+
     static template = {
         type: "header #header",
         $: {
@@ -34,7 +45,7 @@ export class Header extends Component
             $: [
                 {
                     type: "a .title",
-                    href: "/",
+                    href: c => router.externalize(c.homeUrl ?? "/"),
                     $: [
                         { 
                             if: c => c.logoUrl,
