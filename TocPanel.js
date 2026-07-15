@@ -66,6 +66,12 @@ export class TocPanel extends Component
         return this.#toc ?? [];
     }
 
+    onMount()
+    {
+        this.selectUrl(router.current?.url);
+        super.onMount();
+    }
+
     selectUrl(url)
     {   
         // Get the TOC item for the url
