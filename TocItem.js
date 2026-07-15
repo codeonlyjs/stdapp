@@ -95,17 +95,15 @@ export class TocItem extends Component
                 type: "a",
                 href: c => c.url,
                 on_click: "onClick",
+                class_hasChildren: c => c.item.children != null,
                 $: [
                     {
+                        if: c => c.item.children != null,
                         type: "span .arrow",
-                        style_visibility: c => c.item.children != null ? "visible" : "hidden",
                         on_click: "toggleExpanded",
                         $: makeIcon("keyboard_arrow_right", 18),
                     },
-                    {
-                        type: "span",
-                        text: c => c.item.title,
-                    },
+                    c => c.item.title,
                 ]
             },
             {
@@ -135,14 +133,24 @@ css`
         border-radius: .2em;
         font-size: 0.8em;
         padding: 0.1em;
+        padding-top: 0.2em;
         padding-bottom: 0.2em;
+        padding-left: 1.2em;
 
         .arrow
         {
             display: inline-block;
             transform: translateY(0.2rem);
+            width: 1.2em;
         }
     }
+
+    a.has-children
+    {
+        padding-left: 0;
+        padding-top: 0.1em;
+    }
+
 
     ul
     {
