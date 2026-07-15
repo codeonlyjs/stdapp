@@ -6,6 +6,9 @@
   "module": "./index.js",
   "type": "module",
   "author": "Topten Software",
+  "scripts": {
+    "bump": "npm version patch && git push --follow-tags"
+  },
   "contributors": [
     {
       "name": "Brad Robinson",
