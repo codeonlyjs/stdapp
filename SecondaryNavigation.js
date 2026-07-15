@@ -30,6 +30,7 @@ export class SecondaryNavigation extends Component
             value = [];
 
         this.#toc = value.filter(x => x.depth <= 3);
+        this.#headingCoords = null;
         this.update();
     }
 
