@@ -185,7 +185,7 @@ css`
 .document
 {
     /* Document padding */
-    padding: 1rem 2rem;
+    padding: 0.5rem;
 
     /* Remove top margin from first heading on page*/
     h1:first-child,

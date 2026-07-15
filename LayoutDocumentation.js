@@ -108,14 +108,15 @@ export class LayoutDocumentation extends Component
 
 const maxContentWidth = 720;
 const sidePanelWidth = 250;
+const maxSiteWidth = maxContentWidth + sidePanelWidth * 2 + 200;
 
 css`
 :root
 {
     --side-panel-width: ${sidePanelWidth}px;
     --max-content-width: ${maxContentWidth}px;
-    --max-site-width: ${maxContentWidth + sidePanelWidth * 2}px;
-    --main-indent: calc((100% - (var(--max-content-width) + var(--side-panel-width) * 2)) / 2);
+    --max-site-width: ${maxSiteWidth}px;
+    --no-mans-width: calc((100% - var(--max-site-width)) / 2);
     --fixed-header-height: var(--header-height);
     --scroll-margin-top: var(--header-height);
     --align-content: -1.3rem;
@@ -163,7 +164,7 @@ css`
         position: fixed;
         top: var(--header-height);
         bottom: 0;
-        margin-left: var(--main-indent);
+        margin-left: var(--no-mans-width);
         width: var(--side-panel-width);
         background-color: var(--body-back-color);
         z-index: 1;
@@ -171,8 +172,8 @@ css`
     .content
     {
         position: relative;
-        margin-left: calc(var(--side-panel-width) + var(--main-indent));
-        margin-right: calc(var(--side-panel-width) + var(--main-indent));
+        margin-left: calc((100% - var(--max-content-width)) / 2);
+        margin-right: calc((100% - var(--max-content-width)) / 2);
     }
     .panel-rhs
     {
@@ -181,7 +182,7 @@ css`
         right: 0;
         bottom: 0;
         width: var(--side-panel-width);
-        margin-right: var(--main-indent);
+        margin-right: var(--no-mans-width);
 
         overflow: auto;
         &::-webkit-scrollbar {
@@ -206,21 +207,28 @@ css`
     }
 }
 
-@media screen and (width < ${sidePanelWidth*2 + maxContentWidth + 25}px) 
+@media screen and (width < ${maxSiteWidth}px) 
 {
-    body
+    :root
     {
-        --main-indent: calc((100% - (var(--max-content-width) + var(--side-panel-width))) / 2);
+        --no-mans-width: 0;
     }
+}
 
-    .panel-rhs
+@media screen and (width < ${maxContentWidth + sidePanelWidth * 2 + 25}px) 
+{
+    .layout-documentation
     {
-         display: none;
-    }
+        .panel-rhs
+        {
+            display: none;
+        }
 
-    .content
-    {
-        width: var(--max-content-width);
+        .content
+        {
+            margin-left: calc(var(--side-panel-width) + (100% - (var(--side-panel-width) + var(--max-content-width))) / 2 );
+            margin-right: calc((100% - (var(--side-panel-width) + var(--max-content-width))) / 2 );
+        }
     }
 }
 
@@ -232,10 +240,7 @@ css`
         --scroll-margin-top: var(--header-height);
         --align-content: 0;
     }
-    main
-    {
-        padding: 10px 40px;
-    }
+
     #header
     {
         position: relative;
