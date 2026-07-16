@@ -1,4 +1,5 @@
 import { Component, css, DocumentScrollPosition } from "@codeonlyjs/core";
+import { getScrollParent, scrollPositionIntoViewWithPadding } from "./utils.js";
 
 
 // The main header
@@ -130,19 +131,24 @@ export class SecondaryNavigation extends Component
         // Find the item
         let linkFirst = this.domTree.rootNode.querySelector(`a[href='#${highlightIdFirst}']`);
         let linkLast = this.domTree.rootNode.querySelector(`a[href='#${highlightIdLast}']`);
+        let elScroller = getScrollParent(this.highlight);
         if (linkFirst && linkLast)
         {
             let rThis = this.domTree.rootNode.getBoundingClientRect();
+            let localScrollTop = this.domTree.rootNode.scrollTop;
             let rFirst = linkFirst.getBoundingClientRect();
             let rLast = linkLast.getBoundingClientRect();
-            this.highlight.style.top = rFirst.top - rThis.top - 1;
-            this.highlight.style.height = rLast.bottom - rFirst.top + 2;
-            linkFirst.scrollIntoViewIfNeeded?.(false);
+            let pTop = localScrollTop + rFirst.top - rThis.top - 1;
+            let pHeight = rLast.bottom - rFirst.top + 2;
+            this.highlight.style.top = pTop
+            this.highlight.style.height = pHeight;
+            scrollPositionIntoViewWithPadding(elScroller, pTop, pTop + pHeight);
             this.highlight.style.display = "";
         }
         else
         {
             this.highlight.style.display = "none";
+            elScroller.scrollTop = 0;
         }
     }
 

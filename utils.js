@@ -17,6 +17,46 @@ export function getScrollParent(element, includeHidden)
 }
 
 
+export function scrollPositionIntoViewWithPadding(container, elTop, elBottom, padding = 20)
+{
+    const visibleTop = container.scrollTop;
+    const visibleBottom = visibleTop + container.clientHeight;
+
+    if (elTop - padding < visibleTop) {
+        // element is above the visible area (or too close to top)
+        container.scrollTop = elTop - padding;
+    } else if (elBottom + padding > visibleBottom) {
+        // element is below the visible area (or too close to bottom)
+        container.scrollTop = elBottom + padding - container.clientHeight;
+    }
+}
+
+
+export function scrollIntoViewWithPadding(container, el, padding = 20) 
+{
+    if (!container)
+        container = getScrollParent(el);
+
+    const containerRect = container.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+
+    // element position relative to container's scrollable content
+    const elTop = elRect.top - containerRect.top + container.scrollTop;
+    const elBottom = elTop + elRect.height;
+
+    const visibleTop = container.scrollTop;
+    const visibleBottom = visibleTop + container.clientHeight;
+
+    if (elTop - padding < visibleTop) {
+        // element is above the visible area (or too close to top)
+        container.scrollTop = elTop - padding;
+    } else if (elBottom + padding > visibleBottom) {
+        // element is below the visible area (or too close to bottom)
+        container.scrollTop = elBottom + padding - container.clientHeight;
+    }
+    // else: already fully visible with padding, do nothing
+}
+
 
 export function ensureVisible(elItem, elContainer, options)
 {

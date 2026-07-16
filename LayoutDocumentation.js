@@ -7,7 +7,10 @@ export class LayoutDocumentation extends Component
     {
         super();
         this.create();
+
+        // Close nav panels when navigate
         router.addEventListener("mayLeave", () => this.hidePanel());
+        router.addEventListener("didInPageNav", () => this.hidePanel());
     }
 
     loadRoute(route)
@@ -32,8 +35,11 @@ export class LayoutDocumentation extends Component
     }
     hidePanel()
     {
-        this.activePanel = null;
-        this.invalidate();
+        if (this.activePanel != null)
+        {
+            this.activePanel = null;
+            this.invalidate();
+        }
     }
 
     static template = {
