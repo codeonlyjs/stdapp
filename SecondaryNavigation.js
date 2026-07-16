@@ -90,6 +90,7 @@ export class SecondaryNavigation extends Component
         // Find the first heading that's visible
         let highlightIdFirst = "";
         let highlightIdLast = "";
+        let foundFirstVisible = false;
         if (scrollPos >= 0)
         {
             let vh = window.innerHeight || 0;
@@ -97,19 +98,25 @@ export class SecondaryNavigation extends Component
             {
                 if (hc.top > scrollPos + vh)
                     break;
-                if (highlightIdFirst == "")
+
+                if (!foundFirstVisible)
                 {
-                    if (hc.top > scrollPos)
+                    if (hc.top >= scrollPos)
+                    {
+                        foundFirstVisible = true;
+
+                        if (!highlightIdFirst || hc.top < scrollPos + 150)
+                            highlightIdFirst = hc.id;
+                    }
+                    else
                     {
                         highlightIdFirst = hc.id;
-                        highlightIdLast = hc.id;
                     }
+                    highlightIdLast = highlightIdFirst;
                 }
-                else
-                {
-                    if (hc.bottom < scrollPos + vh)
-                        highlightIdLast = hc.id;
-                }
+
+                if (hc.bottom < scrollPos + vh)
+                    highlightIdLast = hc.id;
             }
         }
 
