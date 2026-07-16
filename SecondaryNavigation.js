@@ -18,7 +18,8 @@ export class SecondaryNavigation extends Component
     #toc;
     #headingCoords = null;
     #oldHeight;
-    #highlightId;
+    #highlightIdFirst;
+    #highlightIdLast;
 
     get toc()
     {
@@ -66,6 +67,8 @@ export class SecondaryNavigation extends Component
         let scrollPos = DocumentScrollPosition.get().top;
         if (this.#headingCoords == null)
         {
+            this.#highlightIdFirst = null;
+            this.#highlightIdLast = null;
             this.#headingCoords = this.#toc.map(x => {
                 if (x.url.startsWith("#"))
                 {
@@ -77,6 +80,7 @@ export class SecondaryNavigation extends Component
                         return {
                             id: id,
                             top: bounds.top + scrollPos,
+                            bottom: bounds.bottom + scrollPos,
                         }
                     }
                 }
@@ -84,33 +88,49 @@ export class SecondaryNavigation extends Component
         }
 
         // Find the first heading that's visible
-        let highlightId = "";
+        let highlightIdFirst = "";
+        let highlightIdLast = "";
         if (scrollPos >= 0)
         {
             let vh = window.innerHeight || 0;
-            scrollPos += 150;
             for (let hc of this.#headingCoords)
             {
-                if (hc.top > scrollPos)
+                if (hc.top > scrollPos + vh)
                     break;
-                highlightId = hc.id;
+                if (highlightIdFirst == "")
+                {
+                    if (hc.top > scrollPos)
+                    {
+                        highlightIdFirst = hc.id;
+                        highlightIdLast = hc.id;
+                    }
+                }
+                else
+                {
+                    if (hc.bottom < scrollPos + vh)
+                        highlightIdLast = hc.id;
+                }
             }
         }
 
         // Quit if correct item already highlighted
-        if (highlightId == this.#highlightId)
+        if (highlightIdFirst == this.#highlightIdFirst &&
+            highlightIdLast == this.#highlightIdLast)
             return;
-        this.#highlightId = highlightId;
+        this.#highlightIdFirst = highlightIdFirst;
+        this.#highlightIdLast = highlightIdLast;
         
         // Find the item
-        let link = this.domTree.rootNode.querySelector(`a[href='#${highlightId}']`);
-        if (link)
+        let linkFirst = this.domTree.rootNode.querySelector(`a[href='#${highlightIdFirst}']`);
+        let linkLast = this.domTree.rootNode.querySelector(`a[href='#${highlightIdLast}']`);
+        if (linkFirst && linkLast)
         {
             let rThis = this.domTree.rootNode.getBoundingClientRect();
-            let r = link.getBoundingClientRect();
-            this.highlight.style.top = r.top - rThis.top - 1;
-            this.highlight.style.height = r.height + 2;
-            link.scrollIntoViewIfNeeded?.(false);
+            let rFirst = linkFirst.getBoundingClientRect();
+            let rLast = linkLast.getBoundingClientRect();
+            this.highlight.style.top = rFirst.top - rThis.top - 1;
+            this.highlight.style.height = rLast.bottom - rFirst.top + 2;
+            linkFirst.scrollIntoViewIfNeeded?.(false);
             this.highlight.style.display = "";
         }
         else
