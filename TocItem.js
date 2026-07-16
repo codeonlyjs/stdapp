@@ -128,7 +128,7 @@ css`
     a
     {
         display: block;
-        color: var(--subtle-color);
+        color: var(--subtle-fore-color);
         white-space: nowrap;
         border-radius: .2em;
         font-size: 0.8em;

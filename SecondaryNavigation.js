@@ -162,7 +162,7 @@ export class SecondaryNavigation extends Component
                 bind: "highlight",
             },
             {
-                type: "h2 .title .muted",
+                type: "h2 .title",
                 text: "On This Page",
                 if: c => c.toc.length > 0,
             },
@@ -201,11 +201,13 @@ css`
 
     a.link
     {
+        color: var(--subtle-fore-color);
         display: block;
     }
     
     h2.title
     {
+        color: var(--subtle-fore-color);
         font-size: 0.8rem;
         text-transform: uppercase;
         margin-top: 0.5rem;
