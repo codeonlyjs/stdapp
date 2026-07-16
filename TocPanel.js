@@ -48,6 +48,11 @@ export class TocPanel extends Component
     #urlMap;
     #selectedItem = null;
 
+    get flat()
+    {
+        return true;
+    }
+
     get toc()
     {
         return this.#toc;
@@ -86,7 +91,7 @@ export class TocPanel extends Component
         this.#selectedItem = item;
         notify(this.#selectedItem, "select");
 
-        let p = item.parent;
+        let p = item?.parent;
         while (p)
         {
             notify(p, "ensureExpanded");
@@ -96,6 +101,7 @@ export class TocPanel extends Component
 
     static template = {
         type: "div .toc-panel .toc-tree",
+        class_flat: c => c.flat,
         $: [
             {
                 foreach: c => c.items,
@@ -132,5 +138,39 @@ css`
     &::-webkit-scrollbar { width: 5px; }
     &::-webkit-scrollbar-track { background: transparent; }
     &::-webkit-scrollbar-thumb { background: var(--gridline-color); border-radius: 3px; }
+
+    &.flat
+    {
+        & > li > a > .arrow
+        {
+            display: none;
+        }
+        & > li > a
+        {
+            padding-left: 1.2rem;
+        }   
+        & > li > a.has-children
+        {
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            cursor: unset;
+
+            &:hover
+            {
+                color: var(--subtle-fore-color);
+                background: unset;
+            }
+
+        }   
+
+        & > li > ul
+        {
+            display: block;
+            border-left: none;
+        }
+    }
+
 }
 `;

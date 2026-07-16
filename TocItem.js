@@ -155,8 +155,10 @@ css`
     ul
     {
         margin: 0;
-        padding-left: 20px;
+        margin-left: 0.5rem;
+        padding-left: 0.5rem;
         display: none;
+        border-left: 1px solid var(--gridline-color);
     }
 
     li
