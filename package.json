@@ -1,6 +1,6 @@
 {
   "name": "@codeonlyjs/stdapp",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "A standard application framework for CodeOnlyJS",
   "main": "./index.js",
   "module": "./index.js",
