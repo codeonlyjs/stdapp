@@ -19,14 +19,14 @@ export class Meta extends Component
     get title()
     {
         if (router.current?.title)
-            return `${router.current.title} - ${app.name}`;
+            return `${router.current.title} - ${app.settings.name}`;
         else
-            return app.name;
+            return app.settings.name;
     }
 
     get description()
     {
-        return app.description;
+        return app.settings.description;
     }
 
     get url()
@@ -34,9 +34,22 @@ export class Meta extends Component
         return router.current?.url.href ?? false;
     }
 
+    #warningLogged = false;
     get image()
     {
-        return app.image;
+        if (app.settings.image)
+        {
+            if (app.settings.image.indexOf("://") < 0)
+            {
+                if (!this.#warningLogged)
+                {
+                    console.log("Site image setting is not fully qualified, ignored and excluded from meta tags")
+                    this.#warningLogged = true;
+                }
+                return null;
+            }
+            return app.settings.image;
+        }
     }
 
     static template = [

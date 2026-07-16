@@ -3,9 +3,7 @@ import { Meta } from "./Meta.js";
 import { Header } from "./Header.js";
 import { app } from "./Application.js";
 
-import "./ErrorPage.js"
-
-// Main 
+// AppMain 
 export class AppMain extends Component
 {
     constructor()
@@ -53,9 +51,9 @@ export class AppMain extends Component
         $: [
             {
                 type: Header,
-                title: () => app.name,
-                logoUrl: () => app.logoUrl,
-                homeUrl: () => app.homeUrl,
+                title: () => app.settings.name,
+                logoUrl: () => app.settings.logoUrl,
+                homeUrl: () => app.settings.homeUrl,
             },
             {
                 type: "embed-slot",
